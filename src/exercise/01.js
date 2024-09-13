@@ -1,18 +1,24 @@
 // Simple Data-fetching
-// http://localhost:3000/isolated/exercise/01.js
+// 💯 add error handling with an Error Boundary
+// http://localhost:3000/isolated/final/01.extra-1.js
 
 import * as React from 'react'
-import {PokemonDataView, fetchPokemon} from '../pokemon'
+import {fetchPokemon, PokemonDataView, PokemonErrorBoundary} from '../pokemon'
 
 let pokemon
-let pokemonPromise = fetchPokemon('pikachu').then(p => (pokemon = p))
-console.log(pokemonPromise)
+let pokemonError
+let pokemonPromise = fetchPokemon('bulbasaur').then(
+  p => (pokemon = p),
+  e => (pokemonError = e),
+)
 
 function PokemonInfo() {
+  if (pokemonError) {
+    throw pokemonError
+  }
   if (!pokemon) {
     throw pokemonPromise
   }
-
   return (
     <div>
       <div className="pokemon-info__img-wrapper">
@@ -27,10 +33,11 @@ function App() {
   return (
     <div className="pokemon-info-app">
       <div className="pokemon-info">
-        {/* 🐨 Wrap the PokemonInfo component with a React.Suspense component with a fallback */}
-        <React.Suspense fallback={<div>loading...</div>}>
-          <PokemonInfo />
-        </React.Suspense>
+        <PokemonErrorBoundary>
+          <React.Suspense fallback={<div>Loading Pokemon...</div>}>
+            <PokemonInfo />
+          </React.Suspense>
+        </PokemonErrorBoundary>
       </div>
     </div>
   )
