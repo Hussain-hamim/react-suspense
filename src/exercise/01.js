@@ -5,6 +5,49 @@ import * as React from 'react'
 // 🐨 you'll also need to get the fetchPokemon function from ../pokemon:
 import {PokemonDataView} from '../pokemon'
 
+// function Comp(data) {
+//   const [state, setState] = React.useState({})
+
+//   React.useEffect(() => {
+//     let current = true
+//     setState({status: 'pending'})
+
+//     doAsyncThing().then(p => {
+//       if (current)
+//         setState({pokemon: p, status: 'success'}, e => {
+//           if (current) setState({error: e, status: 'error'})
+//         })
+//       return () => (current = false)
+//     })
+//   }, [pokemon])
+
+//   if (data) {
+//     return <div>{data.message}</div>
+//   }
+//   throw Promise
+// }
+
+// function App2() {
+//   return (
+//     <React.Suspense fallback={<div>Loading...</div>}>
+//       <Comp />
+//     </React.Suspense>
+//   )
+// }
+/**
+ *      promise:
+ * "I promise a result"
+ * producing code: that can take some time
+ * consuming code: that must for the result
+ * A promise is a JavaScript object that links the producing code and consuming code
+ *
+ *      async:
+ * "async and await make the promise easier to write"
+ *   async makes a function return a promise
+ *   await makes a function wait for a promise
+ *
+ */
+
 // 💰 use it like this: fetchPokemon(pokemonName).then(handleSuccess, handleFailure)
 
 // 🐨 create a variable called "pokemon" (using let)
