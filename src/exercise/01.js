@@ -1,24 +1,36 @@
 // Simple Data-fetching
-// 💯 add error handling with an Error Boundary
-// http://localhost:3000/isolated/final/01.extra-1.js
+// 💯 make more generic createResource
+// http://localhost:3000/isolated/final/01.extra-2.js
 
 import * as React from 'react'
 import {fetchPokemon, PokemonDataView, PokemonErrorBoundary} from '../pokemon'
 
-let pokemon
-let pokemonError
-let pokemonPromise = fetchPokemon('bulbasaur').then(
-  p => (pokemon = p),
-  e => (pokemonError = e),
-)
+let pokemonResource = createResource(fetchPokemon('pikachu'))
+
+function createResource(promise) {
+  let status = 'pending'
+  let result = promise.then(
+    resolved => {
+      status = 'success'
+      result = resolved
+    },
+    rejected => {
+      status = 'error'
+      result = rejected
+    },
+  )
+  return {
+    read() {
+      if (status === 'pending') throw result
+      if (status === 'error') throw result
+      if (status === 'success') return result
+      throw new Error('This should be impossible')
+    },
+  }
+}
 
 function PokemonInfo() {
-  if (pokemonError) {
-    throw pokemonError
-  }
-  if (!pokemon) {
-    throw pokemonPromise
-  }
+  const pokemon = pokemonResource.read()
   return (
     <div>
       <div className="pokemon-info__img-wrapper">
