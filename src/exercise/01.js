@@ -11,7 +11,7 @@ import {
 } from '../pokemon'
 import {createResource} from '../utils'
 
-let pokemonResource = createResource(fetchPokemon('pikachu'))
+let pokemonResource = createResource(fetchPokemon('mewtwo'))
 
 function PokemonInfo() {
   const pokemon = pokemonResource.read()
