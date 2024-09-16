@@ -1,6 +1,6 @@
 // Cache resources
-// 💯 create a context provider
-// http://localhost:3000/isolated/final/04.extra-2.js
+// 💯 add cache timeout
+// http://localhost:3000/isolated/final/04.extra-3.js
 
 import * as React from 'react'
 import {
@@ -32,18 +32,42 @@ const SUSPENSE_CONFIG = {
 
 const PokemonResourceCacheContext = React.createContext()
 
-function PokemonCacheProvider({children}) {
+function PokemonCacheProvider({children, cacheTime}) {
   const cache = React.useRef({})
+  const expirations = React.useRef({})
+  // console.log(expirations)
 
-  const getPokemonResource = React.useCallback(name => {
-    const lowerName = name.toLowerCase()
-    let resource = cache.current[lowerName]
-    if (!resource) {
-      resource = createPokemonResource(lowerName)
-      cache.current[lowerName] = resource
-    }
-    return resource
+  React.useEffect(() => {
+    // Set up an interval that runs every 1000 milliseconds (1 second)
+    const interval = setInterval(() => {
+      // Iterate over the entries of the expiration object
+      for (const [name, time] of Object.entries(expirations.current)) {
+        // Check if the expiration time is less than the current time
+        if (time < Date.now()) {
+          // Delete the expired item from the cache
+          delete cache.current[name]
+          delete expirations.current[name]
+        }
+      }
+    }, 1000)
+
+    // Cleanup function to clear the interval when the component unmounts
+    return () => clearInterval(interval)
   }, [])
+
+  const getPokemonResource = React.useCallback(
+    name => {
+      const lowerName = name.toLowerCase()
+      let resource = cache.current[lowerName]
+      if (!resource) {
+        resource = createPokemonResource(lowerName)
+        cache.current[lowerName] = resource
+      }
+      expirations.current[lowerName] = Date.now() + cacheTime
+      return resource
+    },
+    [cacheTime],
+  )
 
   return (
     <PokemonResourceCacheContext.Provider value={getPokemonResource}>
@@ -116,7 +140,7 @@ function App() {
 
 function AppWithProvider() {
   return (
-    <PokemonCacheProvider>
+    <PokemonCacheProvider cacheTime={5000}>
       <App />
     </PokemonCacheProvider>
   )
