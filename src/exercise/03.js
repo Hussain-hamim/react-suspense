@@ -1,6 +1,6 @@
 // useTransition for improved loading states
-// 💯 use css transitions
-// http://localhost:3000/isolated/final/03.extra-1.js
+// 💯 avoid flash of loading content
+// http://localhost:3000/isolated/final/03.extra-2.js
 
 import * as React from 'react'
 import {
@@ -29,7 +29,6 @@ const SUSPENSE_CONFIG = {
   busyDelayMs: 300,
   busyMinDurationMs: 700,
 }
-
 function createPokemonResource(pokemonName) {
   return createResource(fetchPokemon(pokemonName))
 }
