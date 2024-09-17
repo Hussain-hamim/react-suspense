@@ -26,7 +26,6 @@ function preloadImage(src) {
     img.onload = () => resolve(src)
   })
 }
-
 function PokemonInfo({pokemonResource}) {
   const pokemon = pokemonResource.data.read()
   return (
