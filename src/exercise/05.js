@@ -1,6 +1,6 @@
 // Suspense Image
-// 💯 avoid waterfall
-// http://localhost:3000/isolated/final/05.extra-1.js
+// 💯 Render as you Fetch
+// http://localhost:3000/isolated/final/05.extra-2.js
 
 import * as React from 'react'
 import {
