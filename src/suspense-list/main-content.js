@@ -14,6 +14,7 @@ function MainContent({pokemonResource}) {
               <Img src="/img/pokemongo.jpg" alt="pokemon go" />
             </div>
           </div>
+
           <div>
             <div className={cn.quickLookTitle}>Collector's Squirtle Toy</div>
             <div>
@@ -21,12 +22,14 @@ function MainContent({pokemonResource}) {
             </div>
           </div>
         </div>
+
         <div className={cn.createNewTransaction}>
           <form>
             <div>
               <label htmlFor="recipient">Recipient</label>
               <input id="recipient" placeholder="Username or Email" />
             </div>
+
             <div>
               <label htmlFor="amount">Amount</label>
               <input id="amount" placeholder="$0.00" />
@@ -36,6 +39,7 @@ function MainContent({pokemonResource}) {
             </div>
           </form>
         </div>
+
         {pokemon.transactions.map(t => (
           <Transaction key={t.id} {...t} />
         ))}

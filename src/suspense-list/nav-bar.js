@@ -21,6 +21,7 @@ function NavBar({pokemonResource}) {
         </label>
         <input id="search" type="search" placeholder="Search Pokébank" />
       </div>
+
       <div className={cn.centerButtons}>
         <button
           style={{color: pokemon.color}}
