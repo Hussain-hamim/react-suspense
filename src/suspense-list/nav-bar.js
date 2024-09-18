@@ -1,6 +1,8 @@
 import * as React from 'react'
 import Img from './img'
 import * as cn from './nav-bar.module.css'
+import * as sp from './spinner.module.css'
+
 import {
   IoIosHome,
   IoIosNotifications,
@@ -46,7 +48,7 @@ function NavBar({pokemonResource}) {
           onClick={() => alert('You clicked your profile image')}
         >
           <Img
-            className={cn.profilePhoto}
+            className={(cn.profilePhoto, sp.pulse)}
             src={`/img/pokemon/${pokemon.name.toLowerCase()}.jpg`}
             alt="user profile"
           />
